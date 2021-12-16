@@ -1,3 +1,11 @@
+def ehPrimo(n: int) -> bool:
+    i = 2
+    while i * i <= n:
+        if n % i == 0:
+            return False
+        i += 1
+    return True
+
 def mdcDiofantino(a: int, b:int):
     if b == 0:
         return a, 1, 0
