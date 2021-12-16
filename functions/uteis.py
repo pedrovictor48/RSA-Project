@@ -5,5 +5,5 @@ def toTable(texto: str) -> list:
 
 def toText(vetor: list) -> str:
     converter = lambda x: chr(x - 2 + ord('a')) if x != 28 else ' '
-    s = ''.join(list(map(converter, vetor)))
+    s = ''.join(map(converter, vetor))
     return s
