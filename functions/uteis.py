@@ -1,4 +1,6 @@
+from functions.number_theory import *
 import math
+import os
 
 def toTable(texto: str) -> list:
     converter = lambda x: ord(x) - ord('a') + 2 if x != ' ' else 28
@@ -19,35 +21,54 @@ def requisitarEscolha():
         print("Escolha uma opção:\n(1) Gerar chave pública\n(2) Encriptar\n(3) Desencriptar")
         opcao = input()
     if opcao == 'q':
-        exit()
+        encerrar()
     return int(opcao)
 
 def requisitarInteiro():
     p = input()
     while(not p.isdigit()):
         if p == 'q':
-            exit()
-        print(bcolors.WARNING + "Entrada inválida!" + bcolors.ENDC)
+            encerrar()
+        print(bcolors.FAIL + "Entrada inválida!" + bcolors.ENDC)
         p = input()
     return int(p)
 
 def gerarChavePublica():
-    print(bcolors.OKGREEN + "Digite um número primo" + bcolors.BOLD + " p :" + bcolors.ENDC, end = " ")
+    print(bcolors.OKGREEN + bcolors.BOLD + 
+    """
+Gerando chave pública!
+O arquivo contendo a chave pública será gerado em """
+    + bcolors.WARNING
+    + os.getcwd() + "\n"
+    + bcolors.ENDC)
+
+    print(bcolors.OKGREEN + "Digite um número primo" + bcolors.BOLD + " p:" + bcolors.ENDC, end = " ")
     p = requisitarInteiro()
-    print(bcolors.OKGREEN + "Digite um número primo" + bcolors.BOLD + " q :" + bcolors.ENDC, end = " ")
+    while not ehPrimo(p):
+        print(bcolors.FAIL + f"{p} não é primo!" + bcolors.ENDC)
+        p = requisitarInteiro()
+
+    print(bcolors.OKGREEN + "Digite um número primo" + bcolors.BOLD + " q:" + bcolors.ENDC, end = " ")
     q = requisitarInteiro()
-    totiente = (p - 1) * (q - 1)
-    print(bcolors.OKGREEN + f"Digite um relativamente primo à {totiente}" + bcolors.BOLD + " q :" + bcolors.ENDC, end = " ")
+    while not ehPrimo(q):
+        print(bcolors.FAIL + f"{q} não é primo!" + bcolors.ENDC)
+        q = requisitarInteiro()
+    totiente = totienteEuler(p, q)
+    print(bcolors.OKGREEN + f"Digite um número relativamente primo à {totiente}" + bcolors.BOLD + " e:" + bcolors.ENDC, end = " ")
     e = requisitarInteiro()
     while(math.gcd(totiente, e) != 1):
-        print(bcolors.WARNING + f"{e} não é coprimo de {totiente}!" + bcolors.ENDC)
+        print(bcolors.FAIL + f"{e} não é coprimo de {totiente}!" + bcolors.ENDC)
         e = requisitarInteiro()
 
-    print(f"n = {p*q}, e = {e}")
+    print(bcolors.OKGREEN + f"n = {p*q}\ne = {e}" + bcolors.ENDC)
 
     arquivo = open("./chave_publica.txt", "w")
-    arquivo.write(f"n = {p*q}, e = {e}")
+    arquivo.write(f"n = {p*q}\ne = {e}")
     arquivo.close()
+
+def encerrar():
+    print(bcolors.FAIL + "Encerrando programa" + bcolors.ENDC)
+    exit()
 
 def printHead():
     print(
@@ -80,9 +101,9 @@ bcolors.WARNING +
 
     print(
         bcolors.HEADER + "Projeto de Criptografia RSA\n" + 
-        bcolors.OKBLUE + "GRUPO:\n" + bcolors.ENDC +
-        " * Daniel Sival\n * Eduardo Melo\n * Pedro Ferreira\n * Vinícius Teixeira\n" +
-        bcolors.OKBLUE + "PROFESSOR:\n" + bcolors.ENDC +
+        bcolors.OKBLUE + bcolors.BOLD + "GRUPO:\n" + bcolors.ENDC +
+        " * Daniel Silva\n * Eduardo Melo\n * Pedro Ferreira\n * Vinícius Teixeira\n" +
+        bcolors.OKBLUE + bcolors.BOLD + "PROFESSOR:\n" + bcolors.ENDC +
         " * Bruno Almeida Pimentel\n"
     )
 
