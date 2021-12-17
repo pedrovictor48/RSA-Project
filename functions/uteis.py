@@ -30,6 +30,7 @@ def requisitarInteiro():
         if p == 'q':
             encerrar()
         print(bcolors.FAIL + "Entrada inválida!" + bcolors.ENDC)
+        print(bcolors.WARNING + "Tente novamente" + bcolors.ENDC)
         p = input()
     return int(p)
 
@@ -43,21 +44,46 @@ O arquivo contendo a chave pública será gerado em """
     + bcolors.ENDC)
 
     print(bcolors.OKGREEN + "Digite um número primo" + bcolors.BOLD + " p:" + bcolors.ENDC, end = " ")
-    p = requisitarInteiro()
-    while not ehPrimo(p):
-        print(bcolors.FAIL + f"{p} não é primo!" + bcolors.ENDC)
+    while True:
         p = requisitarInteiro()
+        while not ehPrimo(p):
+            print(bcolors.FAIL + f"{p} não é primo!" + bcolors.ENDC)
+            print(bcolors.WARNING + "Tente novamente" + bcolors.ENDC)
+            p = requisitarInteiro()
 
-    print(bcolors.OKGREEN + "Digite um número primo" + bcolors.BOLD + " q:" + bcolors.ENDC, end = " ")
-    q = requisitarInteiro()
-    while not ehPrimo(q):
-        print(bcolors.FAIL + f"{q} não é primo!" + bcolors.ENDC)
+        print(bcolors.OKGREEN + "Digite um número primo" + bcolors.BOLD + " q:" + bcolors.ENDC, end = " ")
         q = requisitarInteiro()
+        while not ehPrimo(q):
+            print(bcolors.FAIL + f"{q} não é primo!" + bcolors.ENDC)
+            print(bcolors.WARNING + "Tente novamente" + bcolors.ENDC)
+            q = requisitarInteiro()
+
+        if p * q <= 28:
+            print(
+                bcolors.WARNING + "Atenção! p e q muito pequenos, caso queira continuar, digite " +
+                bcolors.OKGREEN + bcolors.BOLD + "'c'" + bcolors.ENDC +
+                bcolors.WARNING + " caso queira escolher novamente, digite " +
+                bcolors.OKGREEN + bcolors. BOLD + "'r'" + bcolors.ENDC +
+                bcolors.WARNING + "!" + bcolors.ENDC)
+            escolha = input()
+            while escolha not in set(['q', 'c', 'r']):
+                print(bcolors.FAIL + "Entrada inválida" + bcolors.ENDC)
+                escolha = input()
+            if escolha == 'r':
+                continue
+            elif escolha == 'c':
+                break
+            else:
+                encerrar()
+        else:
+            break
+
     totiente = totienteEuler(p, q)
     print(bcolors.OKGREEN + f"Digite um número relativamente primo à {totiente}" + bcolors.BOLD + " e:" + bcolors.ENDC, end = " ")
     e = requisitarInteiro()
     while(math.gcd(totiente, e) != 1):
         print(bcolors.FAIL + f"{e} não é coprimo de {totiente}!" + bcolors.ENDC)
+        print(bcolors.WARNING + "Tente novamente" + bcolors.ENDC)
         e = requisitarInteiro()
 
     print(bcolors.OKGREEN + f"n = {p*q}\ne = {e}" + bcolors.ENDC)
@@ -65,6 +91,22 @@ O arquivo contendo a chave pública será gerado em """
     arquivo = open("./chave_publica.txt", "w")
     arquivo.write(f"n = {p*q}\ne = {e}")
     arquivo.close()
+
+def requisitarMensagem():
+    caracterValido = set(range(2, 29))
+    def validar(s):
+        for letra in toTable(s):
+            if letra not in caracterValido:
+                return False
+        return True
+    print(bcolors.OKGREEN + "Digite a mensagem:" + bcolors.ENDC)
+    print(bcolors.WARNING + "A mensagem deve ser composta somente por caracteres de 'a' à 'z', ou ' '" + bcolors.ENDC)
+    s = input().lower()
+    while not validar(s):
+        print(bcolors.FAIL + "A mensagem contém algum caracter inválido!" + bcolors.ENDC)
+        print(bcolors.WARNING + "Tente novamente" + bcolors.ENDC)
+        s = input().lower() 
+    return s
 
 def encerrar():
     print(bcolors.FAIL + "Encerrando programa" + bcolors.ENDC)
