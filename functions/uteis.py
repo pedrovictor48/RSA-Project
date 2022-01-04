@@ -8,10 +8,9 @@ def toTable(texto: str) -> list:
     return vetor
 
 def char(x):
-    try:
+    if 'a' <= chr(x - 2 + ord('a')) <= 'z' and chr(x - 2 + ord('a')) != ' ':
         return chr(x - 2 + ord('a'))
-    except:
-        return '#'
+    return '#'
 
 def toText(vetor: list) -> str:
     converter = lambda x: char(x) if x != 28 else ' '
