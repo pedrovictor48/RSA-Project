@@ -74,20 +74,11 @@ class Encript:
                 continue
             n, e = int(valores['n']), int(valores['e'])
             if eventos == 'Encriptar':
-                try:
-                    with open('chaves_publicas.txt', 'r') as file:
-                        encriptar(valores['msg'].lower(), n, e)
-                    print('Encriptado')
-                    sg.popup('Mensagem encriptada')
-                    self.janela.close()
-                    break
-
-                except Exception as ee:
-                    print(ee)
-                    sg.popup('Você ainda não definiu as chaves públicas!')
-                    print('Chaves inexistentes')
-                    self.janela.close()
-                    break
+                encriptar(valores['msg'].lower(), n, e)
+                print('Encriptado')
+                sg.popup('Mensagem encriptada')
+                self.janela.close()
+                break
  
 class Decript:
     def __init__(self):
