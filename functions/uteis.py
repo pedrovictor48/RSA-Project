@@ -14,7 +14,7 @@ def char(x):
         return '#'
 
 def toText(vetor: list) -> str:
-    converter = lambda x: char(x - 2 + ord('a')) if x != 28 else ' '
+    converter = lambda x: char(x) if x != 28 else ' '
     s = ''.join(map(converter, vetor))
     return s
 
