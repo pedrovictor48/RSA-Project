@@ -23,3 +23,4 @@ def checarMensagem(msg: str):
     for caractere in toTable(msg):
         if caractere not in possivels:
             return False
+    return True
