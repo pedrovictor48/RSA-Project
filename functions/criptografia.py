@@ -21,7 +21,7 @@ def desencriptar(p: int, q: int, e: int):
     tabelaEncriptada = list(map(int, textoEncriptado.split(' ')))
     tabelaDesencriptada = list(map(m, tabelaEncriptada))
     textoDesencriptado = toText(tabelaDesencriptada)
-    with open("mensagem_desencriptada.txt", "w") as file:
-        file.write(textoDesencriptado)
+    with open("mensagem_desencriptada.txt", "wb") as file:
+        file.write(textoDesencriptado.encode('utf-8'))
     
     return textoDesencriptado

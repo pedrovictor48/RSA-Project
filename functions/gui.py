@@ -4,6 +4,7 @@ from functions.number_theory import *
 from functions.criptografia import *
 import math
 
+
 class ChavePub:
     def __init__(self):
         layout = [
@@ -12,8 +13,11 @@ class ChavePub:
             [sg.Text('Insira E:', size = (6, 0)), sg.Input(key = 'e', size = (25, 0))],
             [sg.Button('Gerar'), sg.Button('Sair')]
         ]
-        sg.theme('DarkTeal7')
-        self.janela = sg.Window('Chave Pública', layout)
+        self.janela = sg.Window(
+            'Chave Pública',
+            layout=layout,
+            background_color='#2C2C3C',
+            )
  
     def Run(self):
         while True:
@@ -43,18 +47,22 @@ class ChavePub:
                 else:
                     sg.popup_error('Número(s) inválido(s)!')
                     print('Numeros invalidos')
- 
+
 class Encript:
     def __init__(self):
         layout = [
-            [sg.Text('Insira a mensagem:')],
-            [sg.Input(key = 'msg')],
+            [sg.Text('Insira a mensagem:', background_color='#2C2C3C', font=('Bebas', 20), pad=10)],
+            [sg.Multiline(key = 'msg', size=(32, 10))],
             [sg.Text('Insira N:', size = (6, 0)), sg.Input(key = 'n', size = (25, 0))],
             [sg.Text('Insira E:', size = (6, 0)), sg.Input(key = 'e', size = (25, 0))],
             [sg.Button('Encriptar'), sg.Button('Sair')],
         ]
-        sg.theme('DarkTeal7')
-        self.janela = sg.Window('Encriptar', layout)
+        self.janela = sg.Window(
+            'Encriptar',
+            layout=layout,
+            background_color='#2C2C3C',
+            element_justification='c',
+            )
  
     def Run(self):
         while True:
@@ -83,13 +91,18 @@ class Encript:
 class Decript:
     def __init__(self):
         layout = [
-            [sg.Text('Insira P:', size = (6, 0)), sg.Input(key = 'p', size = (25, 0))],
-            [sg.Text('Insira Q:', size = (6, 0)), sg.Input(key = 'q', size = (25, 0))],
-            [sg.Text('Insira E:', size = (6, 0)), sg.Input(key = 'e', size = (25, 0))],
+            [sg.Text('DESENCRIPTAR', background_color='#2C2C3C', font=('Bebas', 20), pad=10)],
+            [sg.Text('Insira P:', size = (6, 0)), sg.Input(key = 'p', size = (30, 20))],
+            [sg.Text('Insira Q:', size = (6, 0)), sg.Input(key = 'q', size = (30, 3))],
+            [sg.Text('Insira E:', size = (6, 0)), sg.Input(key = 'e', size = (30, 3))],
             [sg.Button('Desencriptar'), sg.Button('Sair')]
         ]
-        sg.theme('DarkTeal7')
-        self.janela = sg.Window('Desencriptar', layout)
+        self.janela = sg.Window(
+            'Desencriptar',
+            layout=layout,
+            background_color='#2C2C3C',
+            element_justification='c',
+            )
 
     def Run(self):
         while True:
@@ -119,14 +132,18 @@ class Decript:
 class Hub:
     def __init__(self):
         layout = [
-            [sg.Text('O que deseja fazer?')],
-            [sg.Button('Gerar Chave Pública')],
-            [sg.Button('Encriptar')],
-            [sg.Button('Desencriptar')],
-            [sg.Button('Sair')]
+            [sg.Button('Gerar Chave Pública', button_color='#0BA484', size=(25, 2), font=('Bebas', 20), pad=10)],
+            [sg.Button('Encriptar', button_color='#0BA484', size=(25, 2), font=('Bebas', 20), pad=10)],
+            [sg.Button('Desencriptar', button_color='#0BA484', size=(25, 2), font=('Bebas', 20), pad=10)],
+            [sg.Button('Sair', button_color='#565656', size=(25, 2), font=('Bebas', 20), pad=10)],
         ]
-        sg.theme('DarkTeal7')
-        self.janela = sg.Window('Criptografia RSA', layout, element_justification = 'c', size = (300, 160))
+        self.janela = sg.Window(
+            'Criptografia RSA',
+            layout=layout,
+            background_color='#2C2C3C',
+            size = (500, 500),
+            element_justification='c',
+            )
  
     def Run(self):
         while True:
