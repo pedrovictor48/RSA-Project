@@ -12,12 +12,8 @@ Resoluções dos trabalhos de Matemática Discreta, dos Cursos de Engenharia e C
 * Bruno Almeida Pimentel
 
 ## Como usar o programa:
-Instale a biblioteca PySimpleGUI utilizando o comando:
-```
-pip install PySimpleGUI
-```
-Faça o download do zip do repositório e extraia.  
-Execute o programa, no diretório do RSA.py usando o comando:
-```
-python RSA.py
-```
+1. Instale a biblioteca PySimpleGUI utilizando o comando:
+```pip install PySimpleGUI```
+2. Faça o download do zip do repositório e extraia.  
+3. Execute o programa, no diretório do RSA.py, usando o comando:
+```python RSA.py```
