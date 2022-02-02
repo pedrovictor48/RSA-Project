@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA Criptographer</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body class="center">
+    <h1>RSA Criptographer</h1>
+    <div class="center">
+        <h2>Generate Public Key</h2>
+        <div class="center" style="display: flex; align-items: center;">
+            <table>
+                <tr>
+                    <th title="P is a big prime number that is used to compose N the RSA&#013modulus (N = P*Q) and T = (P - 1)*(Q - 1) is used to decript too">Insert P: <b class="pequeno-hover">(?)</b> </th>
+                    <td>
+                        <input id="pubP" class="number-input" type="number">
+                    </td>
+                </tr>
+                <tr>
+                    <th title="Q is the other prime number that is also used to decript&#013a message and generate the RSA modulus N">Insert Q: <b class="pequeno-hover">(?)</b></th>
+                    <td>
+                        <input id="pubQ" class="number-input" type="number">
+                    </td>
+                </tr>
+                <tr>
+                    <th title="E is an integer that should be coprime with (P - 1)*(Q - 1), this&#013is because we need to generate a modular inverse of E mod (P - 1)*(Q - 1)">Insert E: <b class="pequeno-hover">(?)</b></th>
+                    <td>
+                        <input id="pubE" class="number-input" type="number">
+                    </td>
+                </tr>
+            </table>
+            <button id="public-key-button" onclick="gerarPublica()">Run!</button>
+
+            <table>
+                <tr>
+                    <th title="(P * Q), the public key used to Encript messages">Generated N: <b class="pequeno-hover">(?)</b></th>
+                    <td>
+                        <input id="showN" class="number-input" readonly="true">
+                    </td>
+                </tr>
+                <tr>
+                    <th title="It is the E itself.">Generated E: <b class="pequeno-hover">(?)</b></th>
+                    <td>
+                        <input id="showE" class="number-input" readonly="true">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="center">
+        <h2>Encript</h2>
+        <div class="center" style="display: flex;">
+            <div class="box-texto">
+                <b>Text to Encript:</b>
+                <br>
+                <textarea id="texto-encriptar" class="area-texto" placeholder="Insert text to be encripted"></textarea>
+            </div>
+            <div class="inner-center">
+                <table>
+                    <tr>
+                        <th>Insert N:</th>
+                        <td>
+                            <input id="N" class="number-input" type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Insert E:</th>
+                        <td>
+                            <input id="encE" class="number-input" type="number">
+                        </td>
+                    </tr>
+                </table>
+                <button class="vertical-run" onclick="encriptar()">Run!</button>
+            </div>
+            <div class="box-texto">
+                <b>Encripted Text:</b>
+                <br>
+                <textarea id="texto-encriptado" class="area-texto" readonly="true"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="center">
+        <h2>Decript</h2>
+        <div class="center" style="display: flex;">
+            <div class="box-texto">
+                <b>Text to Decript:</b>
+                <br>
+                <textarea id="texto-decriptar" class="area-texto" placeholder="Insert text to be decripted"></textarea>
+            </div>
+            <div class="inner-center">
+                <table>
+                    <tr>
+                        <th>Insert P:</th>
+                        <td>
+                            <input id="P" class="number-input" type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Insert Q:</th>
+                        <td>
+                            <input id="Q" class="number-input" type="number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Insert E:</th>
+                        <td>
+                            <input id="E" class="number-input" type="number">
+                        </td>
+                    </tr>
+                </table>
+                <button class="vertical-run" onclick="decriptar()">Run!</button>
+            </div>
+            <div class="box-texto">
+                <b>Decripted Text:</b>
+                <br>
+                <textarea id="texto-decriptado" class="area-texto" readonly="true"></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var link = "http://127.0.0.1:5000" 
+    function encriptar() {
+        msg = document.getElementById("texto-encriptar").value
+        N = document.getElementById("N").value
+        E = document.getElementById("encE").value
+        url=`${link}/encriptar/${msg}/${N}/${E}`
+
+        fetch(url)
+        .then(response => response.json())
+        .then(json => {
+            mensagemEncriptada = json
+            console.log("Mensagem encriptada:")
+            console.log(mensagemEncriptada)
+            document.getElementById("texto-encriptado").value = mensagemEncriptada["msg"]
+        })
+    }
+    
+    function decriptar() {
+        msg = document.getElementById("texto-decriptar").value
+        P = document.getElementById("P").value
+        Q = document.getElementById("Q").value
+        E = document.getElementById("E").value
+        url=`${link}/desencriptar/${msg}/${P}/${Q}/${E}`
+
+        fetch(url)
+        .then(response => response.json())
+        .then(json => {
+            mensagemDesencriptada = json
+            console.log("Mesagem desencriptada:")
+            console.log(mensagemDesencriptada)
+            document.getElementById("texto-decriptado").value = mensagemDesencriptada["msg"]
+        })
+
+    }
+
+    function gerarPublica() {
+        P = document.getElementById("pubP").value
+        Q = document.getElementById("pubQ").value
+        E = document.getElementById("pubE").value
+        url=`${link}/gerar/${P}/${Q}/${E}`
+
+        fetch(url)
+        .then(response => response.json())
+        .then(json => {
+            resposta = json
+            console.log("Chave gerada:")
+            console.log(resposta)
+            erro = resposta["erro"]
+            if(erro) {
+                prompt(resposta["msg"])
+                return
+            }
+            document.getElementById("showN").value = resposta["N"]
+            document.getElementById("showE").value = resposta["E"]
+        })
+    }
+
+</script>
+</html>
