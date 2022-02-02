@@ -16,4 +16,5 @@ Resoluções dos trabalhos de Matemática Discreta, dos Cursos de Engenharia e C
 ```pip install PySimpleGUI```
 2. Faça o download do zip do repositório e extraia.  
 3. Execute o programa, no diretório do RSA.py, usando o comando:
-```python RSA.py```
+```python3 RSA.py```  
+**Obervação: Não execute o arquivo com duplo clique e execute com o python 3.**
