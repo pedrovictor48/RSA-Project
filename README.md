@@ -10,3 +10,13 @@ Resoluções dos trabalhos de Matemática Discreta, dos Cursos de Engenharia e C
 
 **Professor**:  
 * Bruno Almeida Pimentel
+
+## Como usar o programa:
+Instale a biblioteca PySimpleGUI utilizando o comando
+```
+pip install PySimpleGUI:
+```
+Execute o programa usando o comando:
+```
+python RSA.py
+```
