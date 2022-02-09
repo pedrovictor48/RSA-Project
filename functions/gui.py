@@ -11,11 +11,13 @@ class ChavePub:
             [sg.Text('Insira P:', size = (6, 0)), sg.Input(key = 'p', size = (25, 0))],
             [sg.Text('Insira Q:', size = (6, 0)), sg.Input(key = 'q', size = (25, 0))],
             [sg.Text('Insira E:', size = (6, 0)), sg.Input(key = 'e', size = (25, 0))],
+            [sg.Checkbox('Verificar a validade dos números', default=True, key='testar')],
             [sg.Button('Gerar'), sg.Button('Sair')]
         ]
         self.janela = sg.Window(
             'Chave Pública',
             layout=layout,
+            element_justification='c',
             background_color='#2C2C3C',
             )
  
@@ -31,7 +33,8 @@ class ChavePub:
                     print('Input errado')
                     continue
                 p, q, e = int(valores['p']), int(valores['q']), int(valores['e'])
-                if ehPrimo(p) and ehPrimo(q) and math.gcd(e, totienteEuler(p, q)) == 1:
+                querChecar = valores['testar'] #log(min(e, tot(p, q))
+                if not querChecar or (ehPrimo(p) and ehPrimo(q) and math.gcd(e, totienteEuler(p, q))) == 1:
                     n = p * q
                     if n <= 27:
                         sg.popup_error('N muito pequeno, tente um valor maior que tal que p*q > 27')
@@ -101,7 +104,7 @@ class Decript:
             'Desencriptar',
             layout=layout,
             background_color='#2C2C3C',
-            element_justification='c',
+            element_justification='c'
             )
 
     def Run(self):
